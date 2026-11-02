@@ -25,12 +25,8 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 			TextOut(hdc, 5, 5, greeting, (int)(_tcslen(greeting)));
 			EndPaint(hWnd, &ps);
 			break;
-		case WM_DESTROY:
-			PostQuitMessage(0);
-			break;
-		default:
-			return DefWindowProc(hWnd, message, wParam, lParam);
-			break;
+		case WM_DESTROY: PostQuitMessage(0); break;
+		default: return DefWindowProc(hWnd, message, wParam, lParam); break;
 	}
 
 	return 0;
@@ -56,34 +52,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	wcex.hIconSm = LoadIcon(wcex.hInstance, IDI_APPLICATION);
 
 	if (!RegisterClassEx(&wcex)) {
-		MessageBox(NULL,
-			_T("Call to RegisterClassEx failed!"),
-			_T("Windows Desktop Guided Tour."),
-			MB_OK | MB_ICONERROR);
-
+		MessageBox(NULL, _T("Call to RegisterClassEx failed!"), _T("Windows Desktop Guided Tour."), MB_OK | MB_ICONERROR);
 		return 1;
 	}
 
 	hInst = hInstance;
 	
-	HWND hWnd = CreateWindowEx(
-		WS_EX_OVERLAPPEDWINDOW,
-		szWindowClass,
-		szTitle,
-		WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT,
-		500, 100,
-		NULL,
-		NULL,
-		hInstance,
-		NULL
-	);
-
+	HWND hWnd = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 500, 500, NULL, NULL, hInstance, NULL);
 	if (!hWnd) {
-		MessageBox(NULL,
-			_T("Call to CreateWindowEx failed!"),
-			_T("Windows Desktop Guided Tour"),
-			MB_OK | MB_ICONERROR);
+		MessageBox(NULL, _T("Call to CreateWindowEx failed!"), _T("Windows Desktop Guided Tour"), MB_OK | MB_ICONERROR);
 		return 1;
 	}
 
